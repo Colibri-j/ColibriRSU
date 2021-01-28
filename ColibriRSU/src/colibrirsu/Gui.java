@@ -10,11 +10,16 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -71,14 +76,14 @@ public class Gui extends Colibri{
     public static void openDBlist(){
         JPanel dbw = new JPanel();//панель роботи з базами даних
             Box first = Box.createVerticalBox();
-                JPanel dbList = getDatabaseList();
+                Box dbList = getDatabaseList();
                 Box tabList = Box.createVerticalBox();
                 JScrollPane sp1 = new JScrollPane(dbList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                     sp1.setPreferredSize(Framer.getSyze(28, 40));
                 JScrollPane sp3 = new JScrollPane(tabList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                     sp3.setPreferredSize(Framer.getSyze(28, 54));
-            first.add(dbList);
-            first.add(tabList);
+            first.add(sp1);
+            first.add(sp3);
             Box work = Box.createVerticalBox();
             JScrollPane sp = new JScrollPane(first, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 sp.setPreferredSize(Framer.getSyze(25, 90));;
@@ -91,37 +96,59 @@ public class Gui extends Colibri{
         win.validate();
     }
     
-    private static JPanel getDatabaseList() {
-        ArrayList<JPanel> jp = new ArrayList<JPanel>();
-        for(String key : activ.keySet()){
-            JPanel p1 = new JPanel();
-                JButton b = new JButton(key);
+    private static Box getDatabaseList() {
+        String[] jp = activ.isEmpty() ? null : activ.keySet().toArray(new String[0]);;
+        Arrays.sort(jp);
+        Box x = Box.createVerticalBox();
+            for(String key : jp){
+                JPanel p = new JPanel();
+                JButton b = new JButton(activ.get(key).getName());
                     b.addActionListener((ActionEvent e) -> {
-                        readDb = key;
+                        readDb = activ.get(key).getName();
                         openTablesOfDatabase();
                     });
                 JButton b1 = new JButton();
-                    b.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "1.jpg"));
-                    b.addActionListener((ActionEvent e) -> {
-                        //выткриваемо діалог введення опису бази даних
-                        
+                        b1.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "1.jpg"));
+                        b1.addActionListener((ActionEvent e) -> {
+                            //выткриваемо діалог введення опису бази даних
+                            
                     });
-                JButton b2 = new JButton();
-                    b2.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "1.jpg"));
-                    b2.addActionListener((ActionEvent e) -> {
-                        //выткриваемо діалог введення опису бази даних
+                JLabel b2 = new JLabel();
+                        b2.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "2.jpg"));
+                        b2.addMouseListener(new MouseListener() {
+                            private JFrame fr;
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
                         
-                    });
-            p1.add(b);
-            p1.add(b1);
-            p1.add(b2);
-        }
-        JPanel p = new JPanel();
-            p.setLayout(new GridLayout(jp.size(), 1, 1, 1));
-            for(int i = 0; i < jp.size(); i++){
-                p.add(jp.get(i));
+                    }
+                            
+                            @Override
+                            public void mousePressed(MouseEvent e) {
+                                fr = new JFrame();
+                            }
+                            
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+                                
+                            }
+                            
+                            @Override
+                            public void mouseEntered(MouseEvent e) {
+                        
+                    }
+                            
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+                        
+                    }
+                        } );
+                        //выткриваемо діалог введення опису бази даних
+                p.add(b);
+                p.add(b1);
+                p.add(b2);
+                x.add(p);
             }
-        return p;
+        return x;
     }
     // </editor-fold>
 

@@ -5,6 +5,7 @@
  */
 package dialog;
 
+import db.CBase;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,7 +50,8 @@ public class NewDb extends Framer{
                         }
                         else{
                             //створюємо нову базу даних
-                            CRunner.run("~db::" + name + ";");
+                            CBase cb = new CBase(name.trim());
+                            activ.put(cb.getName(), cb);
                             //виводимо список активних баз даних
                             NewDb.openDBlist();
                             NewDb.f.setVisible(false);

@@ -37,22 +37,7 @@ public class CBase implements Serializable{
     public CBase(String nameDb){
         f = new File("res" + this.SLH + "database" + this.SLH + nameDb + ".cdb");
         if(f.exists()){
-            try {
-                //така база даних вже існує
-                FileInputStream fis = new FileInputStream(f.getPath());
-                try {
-                    ObjectInputStream ois = new ObjectInputStream(fis);
-                    try {
-                        CBase cb = (CBase) ois.readObject();
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(CBase.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(CBase.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(CBase.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
         }
         else{
             //база выдсутня
@@ -72,6 +57,9 @@ public class CBase implements Serializable{
                     ObjectInputStream ois = new ObjectInputStream(fis);
                     try {
                         CBase cb = (CBase) ois.readObject();
+                        name = cb.getName();
+                        inf = cb.getDatabaseInform();
+                        tables = cb.getTables();
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(CBase.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -114,6 +102,10 @@ public class CBase implements Serializable{
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(CBase.class.getName()).log(Level.SEVERE, null, ex);
             }
+    }
+
+    public String getDatabaseInform() {
+        return inf;
     }
     
 }
