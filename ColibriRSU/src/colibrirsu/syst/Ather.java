@@ -31,7 +31,27 @@ public class Ather {
                 s += s.charAt(i);
             }
         }
-        return (String[])copy(as);
+        return copyStr(as);
+    }
+    
+    /**
+     * метод порізки строки на задану довжину символів
+     * @param  String sub - строка на порізку
+     * @param int size - довжина порізки строки
+     */
+    public static String[] cut(String sub, int size) {
+        ArrayList<String> as = new ArrayList<String>();
+        String s = "";
+        String[] st = sub.split(" ");
+        for(int i = 0; i < st.length; i++){
+            s += st[i] + " ";
+            if(s.length() >= size){
+                as.add(s);
+                s = "";
+            }
+        }
+        as.add(s);
+        return copyStr(as);
     }
     
     /**
@@ -57,6 +77,16 @@ public class Ather {
      */
     public static Object[] copy(ArrayList as) {
         Object[] s = new Object[as.size()];
+        for(int i = 0; i < as.size(); i++){
+            s[i] = as.get(i);
+        }
+        return s;
+    }
+    /**
+     * метод копіювання списку в масив
+     */
+    public static String[] copyStr(ArrayList<String> as) {
+        String[] s = new String[as.size()];
         for(int i = 0; i < as.size(); i++){
             s[i] = as.get(i);
         }

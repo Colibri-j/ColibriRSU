@@ -107,5 +107,9 @@ public class CBase implements Serializable{
     public String getDatabaseInform() {
         return inf;
     }
+
+    public void setDatabaseInformation(String st) {
+        inf = st;
+    }
     
 }
