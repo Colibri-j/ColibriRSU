@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 
 /**
@@ -26,10 +26,10 @@ import javax.swing.JScrollPane;
  */
 public class OpenDb extends Framer{
 
-    public static JFrame f;
+    public static JDialog f;
 
     public static void open() {
-        f = new JFrame();
+        f = new JDialog();
         f.setSize(getSyze(25, 40));
         f.setLocation(NewDb.getPoint());
         Box x = Box.createVerticalBox();

@@ -7,13 +7,10 @@ package colibrirsu;
 
 import dialog.*;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -213,7 +210,17 @@ public class Gui extends Colibri{
      * метод генерації списку таблиць та панелі інструментів
      */
     private static Box createListOfTables() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Box x = Box.createVerticalBox();
+            JLabel headLabel = new JLabel("активна база даних - " + activ.get(readDb).getName());
+            JButton newTable = new JButton("Нова таблиця");
+                newTable.addActionListener((ActionEvent e) -> {
+                    
+                });
+            //додаэмо ліст
+        x.add(headLabel);
+        x.add(newTable);
+        return x;
     }
         // </editor-fold>
+
 }

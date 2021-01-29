@@ -16,11 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import сolibriVM.CRunner;
 
 /**
  *
@@ -28,18 +27,18 @@ import сolibriVM.CRunner;
  */
 public class NewDb extends Framer{
 
-    private static JFrame f;
+    private static JDialog f;
     private static JTextField tf;
     private static String s = "base" + getDataNamber();
 
     public static void createNewDatabase() {
-        f = new JFrame();
+        f = new JDialog();
         f.setSize(getSyze(25));
         f.setLocation(NewDb.getPoint());
         //f.setUndecorated(true);
         Box x = Box.createVerticalBox();
             JPanel p = new JPanel();
-                tf = new JTextField(s);
+                tf = new JTextField(s, 15);
                 JButton b = new JButton("ok");
                     b.addActionListener((ActionEvent e) -> {
                         String name = tf.getText();

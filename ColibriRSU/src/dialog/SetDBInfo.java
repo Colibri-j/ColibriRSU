@@ -6,11 +6,10 @@
 package dialog;
 
 import colibrirsu.syst.Ather;
-import static dialog.OpenDb.f;
 import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -22,11 +21,11 @@ import javax.swing.JTextArea;
  */
 public class SetDBInfo extends Framer{
 
-    private static JFrame informationEntryForm;
+    private static JDialog informationEntryForm;
     private static JTextArea inputField;
 
     public static void setInformation(final String dbName) {
-        informationEntryForm = new JFrame();
+        informationEntryForm = new JDialog();
         informationEntryForm.setSize(getSyze(25, 40));
         informationEntryForm.setLocation(NewDb.getPoint());
         Box workspace = Box.createVerticalBox();

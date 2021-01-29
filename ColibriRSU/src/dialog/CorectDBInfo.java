@@ -10,7 +10,7 @@ import static dialog.Framer.getSyze;
 import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -21,11 +21,11 @@ import javax.swing.JTextArea;
  */
 public class CorectDBInfo extends Framer{
 
-    private static JFrame f;
+    private static JDialog f;
     private static JTextArea ta;
 
     public static void corectInformation(final String dbName) {
-        f = new JFrame();
+        f = new JDialog();
         f.setSize(getSyze(25, 40));
         f.setLocation(NewDb.getPoint());
         Box x = Box.createVerticalBox();
