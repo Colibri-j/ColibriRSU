@@ -33,6 +33,7 @@ public class Gui extends Colibri{
     public static JFrame win;//власне вікно
     public static final Dimension syzeWindow = Toolkit.getDefaultToolkit().getScreenSize();//розмыр вікна підігнаний під розмір екрану
     public static String readDb;
+    public static String activTab;
     
     public static void guiStart(){
         win = new JFrame("Colibri runQuest system of Ukraine 1.0.9");
@@ -98,7 +99,7 @@ public class Gui extends Colibri{
     }
     
     private static Box getDatabaseList() {
-        String[] arrayOfDatabases = activ.isEmpty() ? null : activ.keySet().toArray(new String[0]);;
+        String[] arrayOfDatabases = activ.isEmpty() ? null : activ.keySet().toArray(new String[0]);
         Arrays.sort(arrayOfDatabases);
         Box x = Box.createVerticalBox();
             for(String key : arrayOfDatabases){
@@ -212,13 +213,101 @@ public class Gui extends Colibri{
     private static Box createListOfTables() {
         Box x = Box.createVerticalBox();
             JLabel headLabel = new JLabel("активна база даних - " + activ.get(readDb).getName());
-            JButton newTable = new JButton("Нова таблиця");
-                newTable.addActionListener((ActionEvent e) -> {
-                    
-                });
-            //додаэмо ліст
+            JPanel workPane = new JPanel();
+                JButton newTable = new JButton();
+                    newTable.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "3.jpg"));
+                    newTable.setToolTipText("нова таблиця");
+                    newTable.addActionListener((ActionEvent e) -> {
+                        NewTable.setInformation(readDb);
+                    });
+                JButton cleanDatabase = new JButton();
+                    cleanDatabase.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "5.jpg"));
+                    cleanDatabase.setToolTipText("очистити базу даних");
+                    cleanDatabase.addActionListener((ActionEvent e) -> {
+                        
+                    });
+                JButton deleteDatabase = new JButton();
+                    deleteDatabase.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "4.jpg"));
+                    deleteDatabase.setToolTipText("видалити базу даних");
+                    deleteDatabase.addActionListener((ActionEvent e) -> {
+                        
+                    });
+            workPane.add(newTable);
+            workPane.add(cleanDatabase);
+            workPane.add(deleteDatabase);
         x.add(headLabel);
-        x.add(newTable);
+        x.add(workPane);
+            //додаэмо ліст
+            String[] arrayOfTables = activ.get(readDb).getTables().isEmpty() ? null : 
+                    activ.get(readDb).getTables().keySet().toArray(new String[0]);
+            if(arrayOfTables != null){
+                Arrays.sort(arrayOfTables);
+            for(int i = 0; i < arrayOfTables.length; i++){
+                final String str = arrayOfTables[i];
+                JPanel p = new JPanel();
+                    JButton b = new JButton(arrayOfTables[i]);
+                    JButton b1 = new JButton();
+                        b1.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "1.jpg"));
+                        if(activ.get(readDb).getTables().get(arrayOfTables[i]).getTablesInform() != null){
+                            b1.addActionListener((ActionEvent e) -> {
+                                //выткриваемо діалог редагування опису таблиці
+                                CorectTablesInfo.corectInformation(str);
+                            });
+                        }
+                        else{
+                            b1.addActionListener((ActionEvent e) -> {
+                                //выткриваемо діалог введення опису бази даних
+                                SetTableInfo.setInformation(str);
+                            });
+                        }
+                JLabel b2 = new JLabel();
+                        b2.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "2.jpg"));
+                        if(activ.get(readDb).getTables().get(str).getTablesInform() != null){
+                            b2.addMouseListener(new MouseListener() {
+                                private JFrame fr;
+                                @Override
+                                public void mouseClicked(MouseEvent e) {
+                        
+                    }
+                                
+                                @Override
+                                public void mousePressed(MouseEvent e) {
+                                    fr = new JFrame();
+                                    fr = new JFrame();
+                                    fr.setSize(Framer.getSyze(25, 40));
+                                    fr.setLocation(Framer.getPoint());
+                                    fr.setUndecorated(true);
+                                    fr.setVisible(true);
+                                    Box x = Box.createVerticalBox();
+                                        JLabel l = new JLabel(activ.get(readDb).getTables().get(str).getTablesInform());
+                                    x.add(l);
+                                    JScrollPane sp = new JScrollPane(x, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                                        sp.setPreferredSize(Framer.getSecondSyze(95));
+                                    fr.getContentPane().add(sp);
+                                }
+                            
+                                @Override
+                                public void mouseReleased(MouseEvent e) {
+                                    fr.setVisible(false);
+                                }
+                            
+                                @Override
+                                public void mouseEntered(MouseEvent e) {
+                        
+                    }
+                            
+                                @Override
+                                public void mouseExited(MouseEvent e) {
+                        
+                    }
+                            } );
+                        }
+                p.add(b);
+                p.add(b1);
+                p.add(b2);
+                x.add(p);
+            }
+            }
         return x;
     }
         // </editor-fold>

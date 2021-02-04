@@ -111,5 +111,9 @@ public class CBase implements Serializable{
     public void setDatabaseInformation(String st) {
         inf = st;
     }
+
+    public boolean conteinsTable(String tableName) {
+        return tables.containsKey(tableName);
+    }
     
 }

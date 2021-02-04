@@ -20,6 +20,7 @@ public class Table implements Serializable{
     private static final long serialVersionUID = -9223372036854775792l;
     private ArrayList<Column> coules = new ArrayList<Column>();
     private String name;//ім'я таблиці
+    private String inf;//ім'я таблиці
     
     public Table(String nameT){
         name = nameT;
@@ -27,6 +28,14 @@ public class Table implements Serializable{
     
     public String getName(){
         return name;
+    }
+
+    public String getTablesInform() {
+        return inf;
+    }
+
+    public void setTablesInformation(String text) {
+        inf = text;
     }
 
     /**
@@ -42,6 +51,7 @@ public class Table implements Serializable{
         private static final long serialVersionUID = -9223372036854775791l;
         String name;//ім'я колонки
         String type;//тип змінної
+        String value;
 
         public Column() {
             

@@ -5,6 +5,8 @@
  */
 package dialog;
 
+import db.Table;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,21 +26,48 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author учень 1
+ * @author i++
+ * клас створення новоъ таблиці базиДаних
  */
 public class NewTable extends Framer{
     private static JDialog informationEntryForm;
     private static JTextArea inputField;
     private static JTextField text;
+    private static Box workspace;
 
     public static void setInformation(final String dbName) {
         informationEntryForm = new JDialog();
         informationEntryForm.setSize(getSyze(15, 30));
         informationEntryForm.setLocation(NewDb.getPoint());
-        Box workspace = Box.createVerticalBox();
+        workspace = Box.createVerticalBox();
             text = new JTextField("table" + getTableNamber(), 15);
             JPanel p = new JPanel();
                 JButton ok = new JButton("гаразд");
+                    ok.addActionListener((ActionEvent e) -> {
+                        String tableName = text.getText().trim();
+                        if(tableName.equals("") || tableName.equals(" ")){
+                            //невведене ім'Я
+                            JLabel l = new JLabel("!ВВЕДІТЬ ІМ'Я ТАБЛИЦІ");
+                                l.setForeground(Color.red);
+                            workspace.add(l);
+                            informationEntryForm.validate();
+                        }
+                        else if(activ.get(readDb).conteinsTable(tableName)){
+                            //ТАКА ТАБЛИЦЯ вже э
+                            JLabel l = new JLabel("!ТАБЛИЦЯ З ТАКИМ ІМЕНЕМ ВЖЕ ІСНУЄ");
+                                l.setForeground(Color.red);
+                            workspace.add(l);
+                            informationEntryForm.validate();
+                        }
+                        else{
+                            Table t = new Table(tableName);
+                            activ.get(readDb).getTables().put(t.getName(), t);
+                            activ.get(readDb).save();
+                            informationEntryForm.setVisible(false);
+                            activTab = t.getName();
+                            openTablesOfDatabase();
+                        }
+                    });
                 JButton concel = new JButton("відмінити");
                     concel.addActionListener((ActionEvent e) -> {
                         informationEntryForm.setVisible(false);

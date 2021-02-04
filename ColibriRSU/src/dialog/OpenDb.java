@@ -36,20 +36,22 @@ public class OpenDb extends Framer{
             ArrayList<File> databaseFileList = getFileList();//отримуэмо выдсортований список файлів
             //створюэмо список 
             for(int i = 0; i < databaseFileList.size(); i++){
-                JButton b = new JButton(databaseFileList.get(i).getName());
-                    final int a = i;
-                    b.setHorizontalAlignment(JButton.LEFT);
-                    b.addActionListener((ActionEvent e) -> {
-                        try {
-                            CBase cb = new CBase(databaseFileList.get(a));
-                            activ.put(cb.getName(), cb);
-                            f.setVisible(false);
-                            OpenDb.openDBlist();
-                        } catch (FileNotFoundException ex) {
-                            Logger.getLogger(OpenDb.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    });
+                if(!ifEmpty(databaseFileList.get(i))){
+                    JButton b = new JButton(databaseFileList.get(i).getName());
+                        final int a = i;
+                        b.setHorizontalAlignment(JButton.LEFT);
+                        b.addActionListener((ActionEvent e) -> {
+                            try {
+                                CBase cb = new CBase(databaseFileList.get(a));
+                                activ.put(cb.getName(), cb);
+                                f.setVisible(false);
+                                OpenDb.openDBlist();
+                            } catch (FileNotFoundException ex) {
+                                Logger.getLogger(OpenDb.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        });
                 x.add(b);
+                }
             }
         JScrollPane sp = new JScrollPane(x, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             sp.setPreferredSize(OpenDb.getSecondSyze(95));
@@ -60,6 +62,10 @@ public class OpenDb extends Framer{
     private static ArrayList<File> getFileList() {
         File f = new File("res" + SLH + "database");
         return Sorted.sortFilesToArrayList(f.listFiles());
+    }
+
+    private static boolean ifEmpty(File get) {
+        return activ.containsKey(get.getName());
     }
     
 }
