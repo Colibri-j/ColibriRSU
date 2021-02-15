@@ -15,7 +15,7 @@ import java.awt.Point;
  * клас управлыння діалоговими вікнами
  */
 public class Framer extends Gui{
-    private static Dimension d;
+    static Dimension d;
     
     /**
      * метод вираховує розміри вікна, відносно розмірів екрану

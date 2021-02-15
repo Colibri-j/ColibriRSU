@@ -18,6 +18,8 @@ import javax.swing.JTextArea;
  *
  * @author i++
  * (c)Colibri. 2021 year.
+ *     changed of 2021.04.02
+ *     changed of 2021.15.02
  */
 public class SetDBInfo extends Framer{
 
@@ -27,7 +29,7 @@ public class SetDBInfo extends Framer{
     public static void setInformation(final String dbName) {
         informationEntryForm = new JDialog();
         informationEntryForm.setSize(getSyze(25, 40));
-        informationEntryForm.setLocation(NewDb.getPoint());
+        informationEntryForm.setLocation(SetDBInfo.getPoint());
         Box workspace = Box.createVerticalBox();
             inputField = new JTextArea();
                 inputField.setLineWrap(true);
@@ -41,7 +43,7 @@ public class SetDBInfo extends Framer{
                             if(enteredText[i].length() > 40){
                                 String[] termAttached = Ather.cut(enteredText[i], 40);
                                 finalText += termAttached[0];
-                                for(int a = 0; a < termAttached.length; a++){
+                                for(int a = 1; a < termAttached.length; a++){
                                     finalText += "\n<br>" + termAttached[a];
                                 }
                             }

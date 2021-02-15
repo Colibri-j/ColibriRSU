@@ -6,6 +6,7 @@
 package colibrirsu.syst;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -102,6 +103,26 @@ public class Ather {
             as.add(o);
         }
         return as;
+    }
+
+    /**
+     * метод переводить дату в зрозумылий формат: yyyy.mouth.dd-hh:mm:ss
+     */
+    public static String getDatePrint(Date d) {
+        String s = "" + (d.getYear() + 1900) + "." 
+                + (d.getMonth() < 9 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) + "."
+                + formatAsTwo(d.getDate()) + "-"
+                + formatAsTwo(d.getHours()) + ":"
+                + formatAsTwo(d.getMinutes()) + ":"
+                + formatAsTwo(d.getSeconds());
+        return s;
+    }
+
+    /**
+     * метод перетворює число у формат 04, для двозначних чисел
+     */
+    public static String formatAsTwo(int i) {
+        return i < 10 ? "0" + i : "" + i;
     }
     
 }
