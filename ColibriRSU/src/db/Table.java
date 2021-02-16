@@ -109,6 +109,24 @@ public class Table implements Serializable{
     }
 
     /**
+     * метод видаляє вказану колонку
+     */
+    public void removeColumn(int a) {
+        coules.remove(a);
+    }
+
+    /**
+     * метод повертає тип вказаної колонки
+     */
+    public int getColumtType(int a) {
+        return coules.get(a).type;
+    }
+
+    public String getDefoltValue(int a) {
+        return coules.get(a).def;
+    }
+
+    /**
      * клас опису колонок таблиці
      * @param String name - ім'я колонки
      * @param int type - тип змінної? перелічені в інтерфейсі Typeable: 
@@ -124,7 +142,7 @@ public class Table implements Serializable{
         public Column(String n, int t, String defoultVal) {
             name = n;
             type = t;
-            def = defoultVal;
+            def = !defoultVal.equals("") || !defoultVal.equals(" ") || defoultVal != null ? defoultVal : null;
         }
 
         private int length() {

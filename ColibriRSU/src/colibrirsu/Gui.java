@@ -218,6 +218,7 @@ public class Gui extends Colibri{
     private static Box createListOfTables() {
         Box x = Box.createVerticalBox();
             JLabel headLabel = new JLabel("активна база даних - " + activ.get(readDb).getName());
+                headLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
             JPanel workPane = new JPanel();
                 JButton newTable = new JButton();
                     newTable.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "3.jpg"));
@@ -403,6 +404,9 @@ public class Gui extends Colibri{
             JButton b2 = new JButton();
                 b2.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "4.jpg"));
                 b2.setToolTipText("видалити колонку");
+                b2.addActionListener((ActionEvent e) -> {
+                    RemoveColumn.remove();
+                });
             JButton b3 = new JButton();
                 b3.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "9.jpg"));
                 b3.setToolTipText("зберегти зміни");
