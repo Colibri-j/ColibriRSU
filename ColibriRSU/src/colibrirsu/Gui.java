@@ -24,6 +24,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -38,7 +39,7 @@ public class Gui extends Colibri{
     public static String activTab;
     
     public static void guiStart(){
-        win = new JFrame("Colibri runQuest system of Ukraine 1.0.9");
+        win = new JFrame("Colibri runQuest system of Ukraine 1.0.10");
         win.setSize(syzeWindow);
         win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         win.setJMenuBar(getMenuBar());//Створення меню управляння
@@ -365,7 +366,10 @@ public class Gui extends Colibri{
         Box x = Box.createVerticalBox();
             JLabel l = new JLabel(getTableInfo());
             JPanel p = getWorkPane();
+            JTable t = activ.get(readDb).getTables().get(activTab).syze() > 0 ? getTable() : new JTable();
         x.add(l);
+        x.add(p);
+        x.add(new JScrollPane(t));
         return x;
     }
     
@@ -390,6 +394,9 @@ public class Gui extends Colibri{
             JButton b0 = new JButton();
                 b0.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "8.jpg"));
                 b0.setToolTipText("ввести дані");
+                b0.addActionListener((ActionEvent e) -> {
+                    AddDatas.add();
+                });
             JButton b1 = new JButton();
                 b1.setIcon(new ImageIcon("res" + Gui.SLH + "img" + SLH + "but" + SLH + "5.jpg"));
                 b1.setToolTipText("очистити таблицю");
@@ -410,6 +417,45 @@ public class Gui extends Colibri{
         p.add(b4);
         return p;
     }
+    
+    private static JTable getTable() {
+        Table ta = activ.get(readDb).getTables().get(activTab);
+        String[][] st = null;
+        String[] str = null;
+        if(ta.columnLength() != 0){
+            st = new String[ta.columnLength()][ta.syze()];
+            str = new String[ta.syze()];
+            for(int i = 0; i < st.length; i++){
+                for(int a = 0; a < st[i].length; a++){
+                    if(i == 0){
+                        str[a] = ta.getColumnName(a);
+                    }
+                    else{
+                        st[i][a] = ta.getValue(a, i - 1);
+                    }
+                }
+            }
+        }
+        else{
+            if(ta.syze() != 0){
+                str = new String[ta.syze()];
+                st = new String[1][ta.syze()];
+                for(int i = 0; i < ta.syze(); i++){
+                    str[i] = ta.getColumnName(i);
+                    st[0][i] = " ";
+                }
+            }
+            else{
+                str = new String[]{" ", " "};
+                st = new String[][]{{" ", " "},{" ", " "}};
+            }
+            
+        }
+        JTable t = new JTable(st, str);
+        return t;
+    }
     // </editor-fold>
+
+    
 
 }
