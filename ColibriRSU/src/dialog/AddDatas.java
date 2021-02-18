@@ -7,10 +7,12 @@ package dialog;
 
 import colibrirsu.syst.Ather;
 import colibrirsu.syst.abs.Typeable;
+import java.awt.event.ActionEvent;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,6 +31,7 @@ public class AddDatas extends Framer implements Typeable{
     public static JDialog d;
     static Map<Integer, JTextField> lines = new HashMap<Integer, JTextField>();
     static Map<Integer, JTextArea> area = new HashMap<Integer, JTextArea>();
+    public static String[] values;
 
     public static void add() {
         d = new JDialog();
@@ -40,7 +43,7 @@ public class AddDatas extends Framer implements Typeable{
 
 
     private static Box work() {
-        String[] values = new String[activ.get(readDb).getTables().get(activTab).syze()];
+        values = new String[activ.get(readDb).getTables().get(activTab).syze()];
         Box x = Box.createVerticalBox();
             JPanel p = new JPanel();
                 for(int i = 0; i < values.length; i++){
@@ -84,17 +87,57 @@ public class AddDatas extends Framer implements Typeable{
                             p.add(lines.get(i));
                             break;
                         case NULL : 
-                            //NULL
                             values[i] = null;
                             p.add(new JLabel("null"));
                             break;
+                        case FUNCTION : 
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            break;
+                        case FORMULA : 
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            break;
+                        case STUTEMENT : 
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            break;
                         case THIS_DATE : 
-                            //NULL
                             values[i] = Ather.getDatePrint(new Date());
                             p.add(new JLabel(values[i]));
                             break;
+                        case ID : 
+                            activ.get(readDb).getTables().get(activTab).autoInc(i);
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            p.add(new JLabel(values[i]));
+                            break;
+                        case AUTOINC : 
+                            activ.get(readDb).getTables().get(activTab).autoInc(i);
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            p.add(new JLabel(values[i]));
+                            break;
+                        case STRING_ID : 
+                            activ.get(readDb).getTables().get(activTab).autoStringInc(i);
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            p.add(new JLabel(values[i]));
+                            break;
+                        case COMBINED_ID : 
+                            activ.get(readDb).getTables().get(activTab).autoCombiInc(i);
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            p.add(new JLabel(values[i]));
+                            break;
+                        case AUTODEC : 
+                            activ.get(readDb).getTables().get(activTab).autoDec(i);
+                            values[i] = activ.get(readDb).getTables().get(activTab).getDefoltValue(i);
+                            p.add(new JLabel(values[i]));
+                            break;
+                        case IMAGE : 
+                            values[i] = "";
+                            final int a = i;
+                            JButton b = new JButton("Додати забраженя");
+                                b.addActionListener((ActionEvent e) -> {
+                                    AddImage.browsePath(a);
+                                });
+                            p.add(b);
+                            break;
                         case TEXT : 
-                            //NULL
                             values[i] = "";
                             area.put(i, new JTextArea(40, 40));
                             area.get(i).setLineWrap(true);

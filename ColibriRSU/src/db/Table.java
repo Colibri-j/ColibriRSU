@@ -122,8 +122,39 @@ public class Table implements Serializable{
         return coules.get(a).type;
     }
 
+    /**
+     * метод повертає значення за замовчуванням
+     */
     public String getDefoltValue(int a) {
         return coules.get(a).def;
+    }
+
+    /**
+     * метод збільшуе значення за замовчуванням на 1, і це значеня потім має бути передате в блок значень.
+     */
+    public void autoInc(int i) {
+        coules.get(i).autoInc();
+    }
+
+    /**
+     * метод збільшуе значення строкового ыдентифыкатора на 1, і це значеня потім має бути передате в блок значень.
+     */
+    public void autoStringInc(int i) {
+        coules.get(i).autoStringIncrement();
+    }
+    
+    /**
+     * метод збільшуе значення комбінованого ыдентифыкатора на 1, і це значеня потім має бути передате в блок значень.
+     */
+    public void autoCombiInc(int i) {
+        coules.get(i).autoCombiIncrement();
+    }
+
+    /**
+     * метод зменшує значення  на 1, і це значеня потім має бути передате в блок значень.
+     */
+    public void autoDec(int i) {
+        coules.get(i).autoDecrement();
     }
 
     /**
@@ -155,6 +186,66 @@ public class Table implements Serializable{
 
         private String getValue(int i) {
             return value.get(i);
+        }
+
+        private void autoInc() {
+            def = "" + (Integer.parseInt(def) + 1);
+        }
+
+        private void autoStringIncrement() {
+            String s = "";
+            boolean inc = true;
+            boolean is = false;
+            for(int i = def.length() - 1; i >= 0; i--){
+                if(inc){
+                    if(def.charAt(i) < 'z'){
+                        s = (def.charAt(i) + 1) + s;
+                        inc = false;
+                        is = true;
+                    }
+                    else{
+                        s = 'A' + s;
+                        is = false;
+                    }
+                    if(is){
+                        s = 'A' + s;
+                    }
+                }
+                else{
+                    s = def.charAt(i) + s;
+                }
+            }
+            def = s;
+        }
+
+        private void autoCombiIncrement() {
+            String s = "";
+            boolean inc = true;
+            boolean is = false;
+            for(int i = def.length() - 1; i >= 0; i--){
+                if(inc){
+                    if(def.charAt(i) < 'z'){
+                        s = (def.charAt(i) + 1) + s;
+                        inc = false;
+                        is = true;
+                    }
+                    else{
+                        s = '0' + s;
+                        is = false;
+                    }
+                    if(is){
+                        s = '0' + s;
+                    }
+                }
+                else{
+                    s = def.charAt(i) + s;
+                }
+            }
+            def = s;
+        }
+
+        private void autoDecrement() {
+            def = "" + (Integer.parseInt(def) - 1);
         }
     }
     

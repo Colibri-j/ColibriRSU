@@ -124,5 +124,34 @@ public class Ather {
     public static String formatAsTwo(int i) {
         return i < 10 ? "0" + i : "" + i;
     }
+
+    /**
+     * метод залишає праву частину строки від останього входження вказаного символа
+     * @param  String s - строка на порізку
+     * @param char c - символ по якому йде порізка строки
+     */
+    public static String cutFrom(String s, char c) {
+        String str = "";
+        for(int i = s.length() - 1; i >= 0; i--){
+            if(c != s.charAt(i)){
+                str = s.charAt(i) + str;
+            }
+            else{
+                break;
+            }
+        }
+        return str;
+    }
+
+    /**
+     * метод перевертаэ масив тстрок з переду назад
+     */
+    public static String[] invert(String[] std) {
+        String[] s = new String[std.length];
+        for(int i = 0; i < s.length; i++){
+            s[i] = std[std.length - (i + 1)];
+        }
+        return s;
+    }
     
 }
